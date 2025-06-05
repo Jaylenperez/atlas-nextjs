@@ -1,6 +1,11 @@
-import React from 'react'
+import React from "react";
 
-export default async function Page({ params }: { params: {id: string } }) {
-        await new Promise(resolve => setTimeout(resolve, 3000));
-    return <div>Topics Page: {params.id}</div>
+interface TopicPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function Page({ params }: TopicPageProps) {
+  return <div>Topics Page: {params.id}</div>;
 }
