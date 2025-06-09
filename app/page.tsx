@@ -1,3 +1,4 @@
+// Homepage (sign in or learn more)
 import Image from "next/image";
 import placeholder from "@/assets/placeholder.svg";
 import Link from "next/link";

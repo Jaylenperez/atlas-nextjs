@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AskQuestion } from "@/components/AskQuestion";
 import { Question } from "@/components/Question";
 import { fetchQuestions, fetchTopic } from "@/lib/data";
@@ -21,14 +22,22 @@ export default async function Page({
       <h1 className="text-3xl font-black flex items-center">
         <HashtagIcon className="h-6 w-6 mr-2" /> {topic.title}
       </h1>
+
       <AskQuestion topic={topic.id} />
+
       {questions.map((question) => (
-        <Question
+        <Link
+          key={question.id}
+          href={`/ui/questions/${question.id}`}
+          className="block hover:no-underline"
+        >
+          <Question
           key={question.id}
           id={question.id}
           text={question.title}
           votes={question.votes}
-        />
+          />
+        </Link>
       ))}
     </div>
   );
