@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import GitHub from "next-auth/providers/github"
 import { fetchUser } from "./lib/data";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   theme: {
@@ -10,31 +11,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     buttonText: "#ffffff",
   },
   providers: [
+    GitHub,
     Credentials({
-      credentials: {
-        email: {
-          label: "Email",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
+    credentials: {
+      email: {
+        label: "Email",
       },
-      //@ts-ignore
-      authorize: async (credentials: { email: string; password: string }) => {
-        const { email, password } = credentials;
-        const user = await fetchUser(email);
-        if (!user) return null; //@ts-ignore
-        const passwordsMatch = await bcrypt.compare(password, user.password);
-        if (passwordsMatch) return user;
-        return null;
+      password: {
+        label: "Password",
+        type: "password",
+      },
     },
-    }),
+    //@ts-ignore
+    authorize: async (credentials: { email: string; password: string }) => {
+      const { email, password } = credentials;
+      const user = await fetchUser(email);
+      if (!user) return null; //@ts-ignore
+      const passwordsMatch = await bcrypt.compare(password, user.password)
+      if (passwordsMatch) return user;
+      return null;
+    },
+  }),
   ],
   callbacks: {
-    authorized: async ({ auth }) => {
-      // Logged in users are authenticated, otherwise redirect to login page
-      return !!auth;
-    },
+    authorized: async({auth}) =>{
+        // Logged in users are authenicated, otherwise redirect to login page
+        return !!auth
+    }
   },
 });

@@ -18,4 +18,13 @@ export type Question = {
   title: string;
   topic_id: string;
   votes: number;
+  answer_id?: string;
 };
+
+export type Answer = {
+  id: string;
+  question_id: string;
+  answer: string;
+  correct: boolean;
+
+}
